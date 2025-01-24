@@ -1,4 +1,5 @@
 import { useInView } from "react-intersection-observer";
+import { UserPlus, UtensilsCrossed, HandHeart, Globe } from "lucide-react";
 
 export const HowItWorks = () => {
   const { ref, inView } = useInView({
@@ -8,16 +9,24 @@ export const HowItWorks = () => {
 
   const steps = [
     {
-      title: "Choose Your Impact",
-      description: "Select how you want to contribute to bee conservation.",
+      title: "Sign Up",
+      description: "Create an account as a donor, NGO, or volunteer in just a few clicks.",
+      icon: UserPlus,
     },
     {
-      title: "Join the Community",
-      description: "Connect with fellow bee enthusiasts and experts.",
+      title: "Donate Food",
+      description: "Submit surplus food details like type, quantity, and location through our simple donation form.",
+      icon: UtensilsCrossed,
     },
     {
-      title: "Make a Difference",
-      description: "Start your journey in protecting our precious pollinators.",
+      title: "Claim Donations",
+      description: "NGOs and volunteers can browse and claim available donations to distribute to those in need.",
+      icon: HandHeart,
+    },
+    {
+      title: "Make an Impact",
+      description: "Track your contributions, earn rewards, and help reduce food waste!",
+      icon: Globe,
     },
   ];
 
@@ -25,7 +34,7 @@ export const HowItWorks = () => {
     <section
       id="how-it-works"
       ref={ref}
-      className="py-20 bg-white"
+      className="py-20 bg-gradient-to-b from-white to-honey/5"
     >
       <div className="container mx-auto px-6">
         <div className={`text-center mb-16 ${inView ? "animate-fade-up" : "opacity-0"}`}>
@@ -35,17 +44,32 @@ export const HowItWorks = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-earth-dark mt-4 mb-6">
             How It Works
           </h2>
+          <p className="text-earth text-lg max-w-2xl mx-auto">
+            Join our mission to reduce food waste and help those in need
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
             <div
               key={index}
-              className={`text-center ${inView ? "animate-fade-up" : "opacity-0"}`}
+              className={`relative text-center ${inView ? "animate-fade-up" : "opacity-0"}`}
               style={{ animationDelay: `${index * 200}ms` }}
             >
-              <div className="w-16 h-16 bg-honey rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">
-                {index + 1}
+              <div className="relative">
+                <div className="w-16 h-16 bg-honey rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">
+                  <step.icon className="w-8 h-8" />
+                </div>
+                {index < steps.length - 1 && (
+                  <div className="hidden lg:block absolute top-8 left-[calc(50%+2rem)] right-0 h-[2px] bg-honey/20">
+                    <div 
+                      className={`h-full bg-honey transition-all duration-1000 ${
+                        inView ? "w-full" : "w-0"
+                      }`}
+                      style={{ transitionDelay: `${(index + 1) * 200}ms` }}
+                    />
+                  </div>
+                )}
               </div>
               <h3 className="text-xl font-semibold text-earth-dark mb-4">
                 {step.title}
@@ -53,6 +77,17 @@ export const HowItWorks = () => {
               <p className="text-earth">{step.description}</p>
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <button
+            className={`bg-honey hover:bg-honey-dark text-white px-8 py-3 rounded-full font-semibold transition-all duration-200 transform hover:scale-105 ${
+              inView ? "animate-fade-up" : "opacity-0"
+            }`}
+            style={{ animationDelay: "800ms" }}
+          >
+            Join Us Now!
+          </button>
         </div>
       </div>
     </section>
