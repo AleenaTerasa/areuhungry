@@ -8,9 +8,9 @@ export const Impact = () => {
   });
 
   const [counts, setCounts] = useState({
-    hives: 0,
-    bees: 0,
-    communities: 0,
+    meals: 0,
+    restaurants: 0,
+    kgSaved: 0,
   });
 
   useEffect(() => {
@@ -21,9 +21,9 @@ export const Impact = () => {
 
       const timer = setInterval(() => {
         setCounts((prev) => ({
-          hives: Math.min(prev.hives + Math.ceil(1000 / steps), 1000),
-          bees: Math.min(prev.bees + Math.ceil(50000 / steps), 50000),
-          communities: Math.min(prev.communities + Math.ceil(100 / steps), 100),
+          meals: Math.min(prev.meals + Math.ceil(50000 / steps), 50000),
+          restaurants: Math.min(prev.restaurants + Math.ceil(200 / steps), 200),
+          kgSaved: Math.min(prev.kgSaved + Math.ceil(25000 / steps), 25000),
         }));
       }, interval);
 
@@ -43,17 +43,20 @@ export const Impact = () => {
             Our Impact
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-earth-dark mt-4 mb-6">
-            Making a Difference
+            Making a Difference Together
           </h2>
+          <p className="text-earth text-lg max-w-2xl mx-auto">
+            Every donation counts in our fight against food waste and hunger
+          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
           {[
-            { label: "Hives Protected", value: counts.hives.toLocaleString() },
-            { label: "Bees Saved", value: counts.bees.toLocaleString() },
+            { label: "Meals Donated", value: counts.meals.toLocaleString() },
+            { label: "Partner Restaurants", value: counts.restaurants.toLocaleString() },
             {
-              label: "Communities Impacted",
-              value: counts.communities.toLocaleString(),
+              label: "Kg of Food Saved",
+              value: counts.kgSaved.toLocaleString(),
             },
           ].map((stat, index) => (
             <div

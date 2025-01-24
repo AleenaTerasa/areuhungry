@@ -20,21 +20,21 @@ export const Hero = () => {
     <div className="relative h-screen overflow-hidden">
       <div
         ref={parallaxRef}
-        className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1576363414875-6cf398c46ce4?q=80')] bg-cover bg-center"
+        className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1488459716781-31db52582fe9?q=80')] bg-cover bg-center"
         style={{ transform: "translateY(0)" }}
       />
-      <div className="absolute inset-0 bg-black/30" />
+      <div className="absolute inset-0 bg-black/40" />
       <div className="relative h-full flex items-center justify-center text-center">
         <div className="container mx-auto px-6 animate-fade-up">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Save Bees, Save Earth
+            Rescue Food, Save Lives
           </h1>
           <p className="text-xl md:text-2xl text-cream mb-8 max-w-2xl mx-auto">
-            Join our mission to protect pollinators and preserve our planet's
-            biodiversity for future generations.
+            Join our mission to reduce food waste and feed communities in need.
+            Every meal saved is a step towards a better future.
           </p>
           <Button className="bg-honey hover:bg-honey-dark text-white px-8 py-6 text-lg transition-all duration-200 transform hover:scale-105">
-            Make an Impact
+            Donate Food Now
           </Button>
         </div>
       </div>
