@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +24,10 @@ export const Navigation = () => {
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold text-earth-dark">
+          <div 
+            className="text-2xl font-bold text-earth-dark cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             Bee The Change
           </div>
           <div className="hidden md:flex items-center space-x-8">
@@ -46,8 +51,9 @@ export const Navigation = () => {
             </a>
             <Button
               className="bg-honey hover:bg-honey-dark text-white transition-all duration-200"
+              onClick={() => navigate("/find-meal")}
             >
-              Join Now
+              Find a Meal
             </Button>
           </div>
         </div>
