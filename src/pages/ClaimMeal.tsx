@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { MapPin, Clock, User, Phone, Mail, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import Map from "@/components/Map";
 
 interface LocationState {
   donation?: {
@@ -123,10 +124,8 @@ const ClaimMeal = () => {
                 <div>{donation.location}</div>
               </div>
               
-              {/* Map placeholder - replace with actual map implementation */}
-              <div className="w-full h-48 bg-gray-200 rounded-lg flex items-center justify-center">
-                Map will be implemented here
-              </div>
+              {/* Map integration */}
+              <Map location={donation.location} />
             </CardContent>
           </Card>
 
