@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
+import { useNavigate } from "react-router-dom";
 
 interface FoodDonation {
   id: string;
@@ -37,6 +38,11 @@ const mockDonations: FoodDonation[] = [
 const RealTimeFeed = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [donations] = useState<FoodDonation[]>(mockDonations);
+  const navigate = useNavigate();
+
+  const handleClaim = (donation: FoodDonation) => {
+    navigate("/claim-meal", { state: { donation } });
+  };
 
   return (
     <div className="min-h-screen bg-cream">
@@ -106,6 +112,7 @@ const RealTimeFeed = () => {
               <CardFooter>
                 <Button
                   className="w-full bg-honey hover:bg-honey-dark text-white"
+                  onClick={() => handleClaim(donation)}
                 >
                   Claim This Food
                 </Button>
