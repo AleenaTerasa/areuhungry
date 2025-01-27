@@ -28,7 +28,7 @@ export const Navigation = () => {
             className="text-2xl font-bold text-earth-dark cursor-pointer"
             onClick={() => navigate("/")}
           >
-            Bee The Change
+            areyouhungry
           </div>
           <div className="hidden md:flex items-center space-x-8">
             <a
