@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
   const parallaxRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +35,10 @@ export const Hero = () => {
             Join our mission to reduce food waste and feed communities in need.
             Every meal saved is a step towards a better future.
           </p>
-          <Button className="bg-honey hover:bg-honey-dark text-white px-8 py-6 text-lg transition-all duration-200 transform hover:scale-105">
+          <Button 
+            onClick={() => navigate("/find-meal")}
+            className="bg-honey hover:bg-honey-dark text-white px-8 py-6 text-lg transition-all duration-200 transform hover:scale-105"
+          >
             Donate Food Now
           </Button>
         </div>
