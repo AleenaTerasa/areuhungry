@@ -36,7 +36,7 @@ export const Hero = () => {
             Every meal saved is a step towards a better future.
           </p>
           <Button 
-            onClick={() => navigate("/find-meal")}
+            onClick={() => navigate("/#donation-form")}
             className="bg-honey hover:bg-honey-dark text-white px-8 py-6 text-lg transition-all duration-200 transform hover:scale-105"
           >
             Donate Food Now
