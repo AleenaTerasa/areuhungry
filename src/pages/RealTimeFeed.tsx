@@ -224,13 +224,24 @@ const RealTimeFeed = () => {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Button
-                      className="w-full bg-honey hover:bg-honey-dark text-white"
-                      onClick={() => handleClaim(donation)}
-                      disabled={claimingId === donation.id || time.expired}
-                    >
-                      {claimingId === donation.id ? "Claiming..." : "Claim This Food"}
-                    </Button>
+                    {claimedIds.has(donation.id) ? (
+                      <Button
+                        variant="secondary"
+                        className="w-full bg-muted text-muted-foreground hover:bg-muted cursor-default"
+                        disabled
+                      >
+                        <CheckCircle2 className="w-4 h-4 mr-2" />
+                        Already Claimed
+                      </Button>
+                    ) : (
+                      <Button
+                        className="w-full bg-honey hover:bg-honey-dark text-white"
+                        onClick={() => handleClaim(donation)}
+                        disabled={claimingId === donation.id || time.expired}
+                      >
+                        {claimingId === donation.id ? "Claiming..." : "Claim This Food"}
+                      </Button>
+                    )}
                   </CardFooter>
                 </Card>
               );
