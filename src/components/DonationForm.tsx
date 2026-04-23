@@ -18,6 +18,7 @@ import {
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 const foodTypes = [
   "Rice",
@@ -35,12 +36,42 @@ export const DonationForm = () => {
   const [quantity, setQuantity] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [date, setDate] = useState<Date>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", { foodType, quantity, location, date });
-    
+
+    if (!foodType || !quantity || !location || !date) {
+      toast({
+        title: "Missing information",
+        description: "Please fill out all fields before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const { error } = await supabase.from("food_donations").insert({
+      food_type: foodType,
+      quantity: parseInt(quantity, 10),
+      location,
+      expiration_time: date.toISOString(),
+    });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      console.error("Error saving donation:", error);
+      toast({
+        title: "Submission failed",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Thank you for your contribution!",
       description: "You've helped reduce food waste today.",
@@ -175,9 +206,10 @@ export const DonationForm = () => {
 
             <Button
               type="submit"
+              disabled={isSubmitting}
               className="w-full bg-honey hover:bg-honey-dark text-white transition-all duration-200"
             >
-              Donate Food Now!
+              {isSubmitting ? "Submitting..." : "Donate Food Now!"}
             </Button>
           </form>
         </div>
