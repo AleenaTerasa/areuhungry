@@ -1,69 +1,77 @@
-# Welcome to your Lovable project
+# 🍲 Are U Hungry? - Food Rescue Platform - https://areuhungry.lovable.app/
 
-## Project info
+**Are U Hungry** is a real-time, social-impact web application designed to reduce food waste by bridging the gap between surplus food providers (restaurants, caterers) and those in need (NGOs, volunteers, and individuals). 
 
-**URL**: https://lovable.dev/projects/24300061-4704-4b8e-a628-bd1a1cfaa6b1
+Built with modern AI-assisted development practices, this platform features frictionless donation flows, real-time database syncing, and integrated dynamic location routing.
 
-## How can I edit this code?
+## ✨ Key Features
 
-There are several ways of editing your application.
+* **Frictionless Donations:** A streamlined "Donate Food Now" flow that allows users to post surplus food availability instantly without forced account creation.
+* **Live 'Find a Meal' Feed:** A dynamically rendering grid of available donations nearby, updating in real-time.
+* **Claim & Route System:** Users can claim available food, which updates the database state to prevent double-claiming. 
+* **Dynamic Map Integration:** Claimed items provide a direct link to Google Maps, automatically routing the user to the donation coordinates for easy pickup.
+* **Responsive Design:** Clean, accessible UI built for both mobile and desktop users.
 
-**Use Lovable**
+## 🛠️ Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/24300061-4704-4b8e-a628-bd1a1cfaa6b1) and start prompting.
+* **Frontend:** React, TypeScript, Vite
+* **Styling:** Tailwind CSS, shadcn-ui
+* **Backend & Database:** Supabase (PostgreSQL)
+* **Development:** Built and prototyped via Lovable.dev
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🚀 Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
+* Node.js & npm installed (We recommend using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+* A Supabase project with a `food_donations` table configured.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Local Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Clone the repository:**
+   ```sh
+   git clone <YOUR_GIT_URL>
+   cd <YOUR_PROJECT_NAME>
+Install dependencies:
 
-Follow these steps:
+Bash
+npm install
+Set up Environment Variables:
+Create a .env file in the root directory and add your Supabase connection details:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Code snippet
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+Start the development server:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Bash
 npm run dev
-```
+The application will start with auto-reloading enabled.
 
-**Edit a file directly in GitHub**
+🗄️ Database Schema
+If you are setting this up from scratch, ensure your Supabase database has a food_donations table with the following structure:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+id (uuid, primary key)
 
-**Use GitHub Codespaces**
+food_type (text)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+quantity (integer)
 
-## What technologies are used for this project?
+location (text)
 
-This project is built with .
+expiration_time (timestamp)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+is_claimed (boolean, default: false)
 
-## How can I deploy this project?
+🤝 Contributing & Editing
+This project was initially prototyped using Lovable.
 
-Simply open [Lovable](https://lovable.dev/projects/24300061-4704-4b8e-a628-bd1a1cfaa6b1) and click on Share -> Publish.
+You can edit this code by:
 
-## I want to use a custom domain - is that possible?
+Using Lovable: Visit the project link and use prompts to generate new features. Changes will commit automatically.
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+Local IDE: Clone, edit locally, and push changes back to this repository.
+
+GitHub Codespaces: Launch a Codespace directly from this repository for cloud-based editing.
+
+🌐 Deployment
+This project is optimized for static hosting platforms. You can deploy it instantly via the Lovable Share/Publish tool, or connect this GitHub repository to platforms like Netlify or Vercel for continuous integration.
