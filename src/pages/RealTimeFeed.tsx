@@ -117,7 +117,11 @@ const RealTimeFeed = () => {
       return;
     }
 
-    setDonations((prev) => prev.filter((d) => d.id !== donation.id));
+    setClaimedIds((prev) => {
+      const next = new Set(prev);
+      next.add(donation.id);
+      return next;
+    });
     setClaimingId(null);
     setClaimedDonation(donation);
   };
