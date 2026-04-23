@@ -299,17 +299,14 @@ const RealTimeFeed = () => {
           <DialogFooter className="sm:justify-center">
             {claimedDonation && (
               <Button
-                asChild
                 className="w-full bg-honey hover:bg-honey-dark text-white"
+                onClick={() => {
+                  const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(claimedDonation.location)}`;
+                  window.open(url, "_blank", "noopener,noreferrer");
+                }}
               >
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(claimedDonation.location)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  See Food Location
-                </a>
+                <ExternalLink className="w-4 h-4 mr-2" />
+                See Food Location
               </Button>
             )}
           </DialogFooter>
