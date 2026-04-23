@@ -14,7 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      food_donations: {
+        Row: {
+          created_at: string
+          expiration_time: string
+          food_type: string
+          id: string
+          location: string
+          quantity: number
+        }
+        Insert: {
+          created_at?: string
+          expiration_time: string
+          food_type: string
+          id?: string
+          location: string
+          quantity: number
+        }
+        Update: {
+          created_at?: string
+          expiration_time?: string
+          food_type?: string
+          id?: string
+          location?: string
+          quantity?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
