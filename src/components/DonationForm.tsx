@@ -104,7 +104,7 @@ export const DonationForm = () => {
   };
 
   return (
-    <section className="py-20 bg-cream relative overflow-hidden">
+    <section id="donation-form" className="py-20 bg-cream relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-earth-dark text-center mb-4">

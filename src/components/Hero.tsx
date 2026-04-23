@@ -1,10 +1,15 @@
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
   const parallaxRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+
+  const handleDonateClick = () => {
+    const el = document.getElementById("donation-form");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,7 +41,7 @@ export const Hero = () => {
             Every meal saved is a step towards a better future.
           </p>
           <Button 
-            onClick={() => navigate("/#donation-form")}
+            onClick={handleDonateClick}
             className="bg-honey hover:bg-honey-dark text-white px-8 py-6 text-lg transition-all duration-200 transform hover:scale-105"
           >
             Donate Food Now
