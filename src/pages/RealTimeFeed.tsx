@@ -131,6 +131,16 @@ const RealTimeFeed = () => {
       <Navigation />
 
       <main className="container mx-auto px-4 pt-24 pb-12">
+        <div className="mb-6 animate-fade-up">
+          <Button
+            variant="outline"
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2"
+          >
+            <Home className="w-4 h-4" /> Home
+          </Button>
+        </div>
+
         <div className="text-center mb-12 animate-fade-up">
           <h1 className="text-4xl font-bold text-earth-dark mb-4">
             Available Donations Near You
