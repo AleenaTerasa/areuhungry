@@ -9,8 +9,8 @@ export const HowItWorks = () => {
 
   const steps = [
     {
-      title: "Sign Up",
-      description: "Create an account as a donor, NGO, or volunteer in just a few clicks.",
+      title: "No Login Required",
+      description: "Instantly donate or claim food without creating an account.",
       icon: UserPlus,
     },
     {
@@ -79,16 +79,6 @@ export const HowItWorks = () => {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <button
-            className={`bg-honey hover:bg-honey-dark text-white px-8 py-3 rounded-full font-semibold transition-all duration-200 transform hover:scale-105 ${
-              inView ? "animate-fade-up" : "opacity-0"
-            }`}
-            style={{ animationDelay: "800ms" }}
-          >
-            Join Us Now!
-          </button>
-        </div>
       </div>
     </section>
   );
