@@ -1,9 +1,10 @@
-import { MapPin, Clock, Filter, Search, Inbox, CheckCircle2, ExternalLink } from "lucide-react";
+import { MapPin, Clock, Filter, Search, Inbox, CheckCircle2, ExternalLink, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useEffect, useMemo, useState } from "react";
 import { Navigation } from "@/components/Navigation";
+import { useNavigate } from "react-router-dom";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -47,8 +48,10 @@ const RealTimeFeed = () => {
   const [donations, setDonations] = useState<FoodDonation[]>([]);
   const [loading, setLoading] = useState(true);
   const [claimingId, setClaimingId] = useState<string | null>(null);
+  const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
   const [claimedDonation, setClaimedDonation] = useState<FoodDonation | null>(null);
-  
+
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -66,7 +69,15 @@ const RealTimeFeed = () => {
           variant: "destructive",
         });
       } else {
-        setDonations(data ?? []);
+        const fetched = data ?? [];
+        setDonations((prev) => {
+          // Preserve locally-claimed donations so the "Already Claimed" state stays visible
+          const fetchedIds = new Set(fetched.map((d) => d.id));
+          const preserved = prev.filter(
+            (d) => claimedIds.has(d.id) && !fetchedIds.has(d.id)
+          );
+          return [...fetched, ...preserved];
+        });
       }
       setLoading(false);
     };
@@ -114,7 +125,11 @@ const RealTimeFeed = () => {
       return;
     }
 
-    setDonations((prev) => prev.filter((d) => d.id !== donation.id));
+    setClaimedIds((prev) => {
+      const next = new Set(prev);
+      next.add(donation.id);
+      return next;
+    });
     setClaimingId(null);
     setClaimedDonation(donation);
   };
@@ -124,6 +139,16 @@ const RealTimeFeed = () => {
       <Navigation />
 
       <main className="container mx-auto px-4 pt-24 pb-12">
+        <div className="mb-6 animate-fade-up">
+          <Button
+            variant="outline"
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2"
+          >
+            <Home className="w-4 h-4" /> Home
+          </Button>
+        </div>
+
         <div className="text-center mb-12 animate-fade-up">
           <h1 className="text-4xl font-bold text-earth-dark mb-4">
             Available Donations Near You
@@ -207,13 +232,24 @@ const RealTimeFeed = () => {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Button
-                      className="w-full bg-honey hover:bg-honey-dark text-white"
-                      onClick={() => handleClaim(donation)}
-                      disabled={claimingId === donation.id || time.expired}
-                    >
-                      {claimingId === donation.id ? "Claiming..." : "Claim This Food"}
-                    </Button>
+                    {claimedIds.has(donation.id) ? (
+                      <Button
+                        variant="secondary"
+                        className="w-full bg-muted text-muted-foreground hover:bg-muted cursor-default"
+                        disabled
+                      >
+                        <CheckCircle2 className="w-4 h-4 mr-2" />
+                        Already Claimed
+                      </Button>
+                    ) : (
+                      <Button
+                        className="w-full bg-honey hover:bg-honey-dark text-white"
+                        onClick={() => handleClaim(donation)}
+                        disabled={claimingId === donation.id || time.expired}
+                      >
+                        {claimingId === donation.id ? "Claiming..." : "Claim This Food"}
+                      </Button>
+                    )}
                   </CardFooter>
                 </Card>
               );
@@ -271,17 +307,14 @@ const RealTimeFeed = () => {
           <DialogFooter className="sm:justify-center">
             {claimedDonation && (
               <Button
-                asChild
                 className="w-full bg-honey hover:bg-honey-dark text-white"
+                onClick={() => {
+                  const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(claimedDonation.location)}`;
+                  window.open(url, "_blank", "noopener,noreferrer");
+                }}
               >
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(claimedDonation.location)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  See Food Location
-                </a>
+                <ExternalLink className="w-4 h-4 mr-2" />
+                See Food Location
               </Button>
             )}
           </DialogFooter>
