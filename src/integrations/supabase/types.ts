@@ -20,6 +20,7 @@ export type Database = {
           expiration_time: string
           food_type: string
           id: string
+          is_claimed: boolean
           location: string
           quantity: number
         }
@@ -28,6 +29,7 @@ export type Database = {
           expiration_time: string
           food_type: string
           id?: string
+          is_claimed?: boolean
           location: string
           quantity: number
         }
@@ -36,6 +38,7 @@ export type Database = {
           expiration_time?: string
           food_type?: string
           id?: string
+          is_claimed?: boolean
           location?: string
           quantity?: number
         }
