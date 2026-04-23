@@ -1,12 +1,20 @@
-import { MapPin, Clock, Filter, Search, Inbox } from "lucide-react";
+import { MapPin, Clock, Filter, Search, Inbox, CheckCircle2, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useEffect, useMemo, useState } from "react";
 import { Navigation } from "@/components/Navigation";
-import { useNavigate } from "react-router-dom";
+
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface FoodDonation {
   id: string;
@@ -39,7 +47,8 @@ const RealTimeFeed = () => {
   const [donations, setDonations] = useState<FoodDonation[]>([]);
   const [loading, setLoading] = useState(true);
   const [claimingId, setClaimingId] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const [claimedDonation, setClaimedDonation] = useState<FoodDonation | null>(null);
+  
   const { toast } = useToast();
 
   useEffect(() => {
@@ -107,24 +116,7 @@ const RealTimeFeed = () => {
 
     setDonations((prev) => prev.filter((d) => d.id !== donation.id));
     setClaimingId(null);
-
-    toast({
-      title: "Meal claimed!",
-      description: `You've claimed ${donation.food_type}.`,
-    });
-
-    navigate("/claim-meal", {
-      state: {
-        donation: {
-          id: donation.id,
-          type: donation.food_type,
-          quantity: `${donation.quantity} servings`,
-          location: donation.location,
-          expiresIn: formatTimeRemaining(donation.expiration_time).label,
-          status: "Fresh",
-        },
-      },
-    });
+    setClaimedDonation(donation);
   };
 
   return (
@@ -204,14 +196,7 @@ const RealTimeFeed = () => {
                     <div className="space-y-3">
                       <div className="flex items-center gap-2 text-earth">
                         <MapPin className="w-4 h-4" />
-                        <a
-                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(donation.location)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-honey hover:underline transition-colors"
-                        >
-                          {donation.location}
-                        </a>
+                        <span>{donation.location}</span>
                       </div>
                       <div className="flex items-center gap-2 text-earth">
                         <Clock className="w-4 h-4" />
@@ -253,6 +238,55 @@ const RealTimeFeed = () => {
           </div>
         </div>
       </main>
+
+      <Dialog open={!!claimedDonation} onOpenChange={(open) => !open && setClaimedDonation(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+              <CheckCircle2 className="h-7 w-7 text-green-600" />
+            </div>
+            <DialogTitle className="text-center text-2xl text-earth-dark">
+              Meal claimed!
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              {claimedDonation
+                ? `You've successfully claimed ${claimedDonation.food_type}. Head to the location to pick it up.`
+                : ""}
+            </DialogDescription>
+          </DialogHeader>
+
+          {claimedDonation && (
+            <div className="rounded-lg bg-cream p-4 space-y-2">
+              <div className="flex items-center gap-2 text-earth">
+                <MapPin className="w-4 h-4" />
+                <span className="font-medium">{claimedDonation.location}</span>
+              </div>
+              <div className="flex items-center gap-2 text-earth-light text-sm">
+                <Clock className="w-4 h-4" />
+                <span>{claimedDonation.quantity} servings</span>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter className="sm:justify-center">
+            {claimedDonation && (
+              <Button
+                asChild
+                className="w-full bg-honey hover:bg-honey-dark text-white"
+              >
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(claimedDonation.location)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  See Food Location
+                </a>
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
