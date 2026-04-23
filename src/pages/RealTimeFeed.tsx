@@ -69,7 +69,15 @@ const RealTimeFeed = () => {
           variant: "destructive",
         });
       } else {
-        setDonations(data ?? []);
+        const fetched = data ?? [];
+        setDonations((prev) => {
+          // Preserve locally-claimed donations so the "Already Claimed" state stays visible
+          const fetchedIds = new Set(fetched.map((d) => d.id));
+          const preserved = prev.filter(
+            (d) => claimedIds.has(d.id) && !fetchedIds.has(d.id)
+          );
+          return [...fetched, ...preserved];
+        });
       }
       setLoading(false);
     };
