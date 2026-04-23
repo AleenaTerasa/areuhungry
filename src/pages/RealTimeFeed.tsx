@@ -116,24 +116,7 @@ const RealTimeFeed = () => {
 
     setDonations((prev) => prev.filter((d) => d.id !== donation.id));
     setClaimingId(null);
-
-    toast({
-      title: "Meal claimed!",
-      description: `You've claimed ${donation.food_type}.`,
-    });
-
-    navigate("/claim-meal", {
-      state: {
-        donation: {
-          id: donation.id,
-          type: donation.food_type,
-          quantity: `${donation.quantity} servings`,
-          location: donation.location,
-          expiresIn: formatTimeRemaining(donation.expiration_time).label,
-          status: "Fresh",
-        },
-      },
-    });
+    setClaimedDonation(donation);
   };
 
   return (
