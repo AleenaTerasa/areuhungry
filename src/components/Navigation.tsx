@@ -32,19 +32,19 @@ export const Navigation = () => {
           </div>
           <div className="hidden md:flex items-center space-x-8">
             <a
-              href="#mission"
+              href="/#mission"
               className="text-earth hover:text-honey transition-colors duration-200"
             >
               Mission
             </a>
             <a
-              href="#how-it-works"
+              href="/#how-it-works"
               className="text-earth hover:text-honey transition-colors duration-200"
             >
               How It Works
             </a>
             <a
-              href="#impact"
+              href="/#impact"
               className="text-earth hover:text-honey transition-colors duration-200"
             >
               Impact
