@@ -48,7 +48,7 @@ const RealTimeFeed = () => {
   const [loading, setLoading] = useState(true);
   const [claimingId, setClaimingId] = useState<string | null>(null);
   const [claimedDonation, setClaimedDonation] = useState<FoodDonation | null>(null);
-  const navigate = useNavigate();
+  
   const { toast } = useToast();
 
   useEffect(() => {
