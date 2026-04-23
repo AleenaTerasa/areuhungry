@@ -206,9 +206,10 @@ export const DonationForm = () => {
 
             <Button
               type="submit"
+              disabled={isSubmitting}
               className="w-full bg-honey hover:bg-honey-dark text-white transition-all duration-200"
             >
-              Donate Food Now!
+              {isSubmitting ? "Submitting..." : "Donate Food Now!"}
             </Button>
           </form>
         </div>
