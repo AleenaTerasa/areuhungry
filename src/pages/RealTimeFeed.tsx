@@ -238,6 +238,55 @@ const RealTimeFeed = () => {
           </div>
         </div>
       </main>
+
+      <Dialog open={!!claimedDonation} onOpenChange={(open) => !open && setClaimedDonation(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+              <CheckCircle2 className="h-7 w-7 text-green-600" />
+            </div>
+            <DialogTitle className="text-center text-2xl text-earth-dark">
+              Meal claimed!
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              {claimedDonation
+                ? `You've successfully claimed ${claimedDonation.food_type}. Head to the location to pick it up.`
+                : ""}
+            </DialogDescription>
+          </DialogHeader>
+
+          {claimedDonation && (
+            <div className="rounded-lg bg-cream p-4 space-y-2">
+              <div className="flex items-center gap-2 text-earth">
+                <MapPin className="w-4 h-4" />
+                <span className="font-medium">{claimedDonation.location}</span>
+              </div>
+              <div className="flex items-center gap-2 text-earth-light text-sm">
+                <Clock className="w-4 h-4" />
+                <span>{claimedDonation.quantity} servings</span>
+              </div>
+            </div>
+          )}
+
+          <DialogFooter className="sm:justify-center">
+            {claimedDonation && (
+              <Button
+                asChild
+                className="w-full bg-honey hover:bg-honey-dark text-white"
+              >
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(claimedDonation.location)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  See Food Location
+                </a>
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
