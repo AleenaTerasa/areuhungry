@@ -196,14 +196,7 @@ const RealTimeFeed = () => {
                     <div className="space-y-3">
                       <div className="flex items-center gap-2 text-earth">
                         <MapPin className="w-4 h-4" />
-                        <a
-                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(donation.location)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-honey hover:underline transition-colors"
-                        >
-                          {donation.location}
-                        </a>
+                        <span>{donation.location}</span>
                       </div>
                       <div className="flex items-center gap-2 text-earth">
                         <Clock className="w-4 h-4" />
