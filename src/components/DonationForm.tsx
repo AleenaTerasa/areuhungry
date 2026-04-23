@@ -36,12 +36,42 @@ export const DonationForm = () => {
   const [quantity, setQuantity] = useState<string>("");
   const [location, setLocation] = useState<string>("");
   const [date, setDate] = useState<Date>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", { foodType, quantity, location, date });
-    
+
+    if (!foodType || !quantity || !location || !date) {
+      toast({
+        title: "Missing information",
+        description: "Please fill out all fields before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const { error } = await supabase.from("food_donations").insert({
+      food_type: foodType,
+      quantity: parseInt(quantity, 10),
+      location,
+      expiration_time: date.toISOString(),
+    });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      console.error("Error saving donation:", error);
+      toast({
+        title: "Submission failed",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Thank you for your contribution!",
       description: "You've helped reduce food waste today.",
